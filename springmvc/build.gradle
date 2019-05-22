@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.jiexun'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.1.5.RELEASE'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
+    compile group: 'c3p0', name: 'c3p0', version: '0.9.1.2'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.2'
+}
+
+compileJava.options.encoding='UTF-8'
+compileTestJava.options.encoding='UTF-8'
+
+/*默认情况下，src/main/java源码资源路径不会将xml编译进去，需要显示将xml文件编译进来*/
+processResources{
+    from('src/main/java'){
+        include '**/*Mapper.xml'
+    }
+}
