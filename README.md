@@ -1,4 +1,4 @@
-# Spring 整合demo
+# Spring 整合ORM框架Demo
 ## Spring整合JDBC
 ### 步骤
 1. 引入Spring-context 和 Spring-jdbc 依赖
