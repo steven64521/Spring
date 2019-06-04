@@ -34,8 +34,13 @@ import java.util.List;
  *     }
  * </p>
  */
-@org.springframework.stereotype.Repository
 public interface UserRepository extends Repository<User, Integer> {
     //查询所有
     List<User> findAll();
+
+    //根据id查询
+    User findUserByUid(Integer uid);
+
+    //新增
+    void save(User user);
 }

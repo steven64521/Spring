@@ -1,9 +1,9 @@
 package com.jiexun.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * Spring整合JPA--注解配置
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @Import(value = DataSourceConfig.class)
-@ComponentScan(value = {"com.jiexun.dao"})
+@EnableJpaRepositories(transactionManagerRef = "jpaTransactionManager", basePackages = "com.jiexun.dao")
 public class SpringJPAConfig {
 
     /**
@@ -32,9 +33,10 @@ public class SpringJPAConfig {
         adapter.setDatabase(Database.MYSQL);
         adapter.setShowSql(true);
         adapter.setGenerateDdl(false);
-        adapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
+        adapter.setDatabasePlatform("org.hibernate.dialect.MySQL5InnoDBDialect");
         return adapter;
     }
+
 
     /**
      * 实体管理工厂,
@@ -49,6 +51,11 @@ public class SpringJPAConfig {
         emfb.setDataSource(dataSource);
         emfb.setJpaVendorAdapter(jpaVendorAdapter());
         emfb.setPackagesToScan("com.jiexun.entity");
+        Properties jpaProperties = new Properties();
+        jpaProperties.put("hibernate.show_sql", true);  //是否输出sql语句
+        jpaProperties.put("hibernate.format_sql", true);    //是否格式化输出的sql语句，更易读
+        jpaProperties.put("hibernate.use_sql_comments", true);  //是否在sql语句前加上方法注释
+        emfb.setJpaProperties(jpaProperties);
         return emfb;
     }
 
