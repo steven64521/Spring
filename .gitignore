@@ -35,3 +35,6 @@ target/
 .idea/
 .gradle/
 build/
+
+gradlew
+mybatis/gradlew.bat
