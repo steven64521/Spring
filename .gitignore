@@ -36,5 +36,7 @@ target/
 .gradle/
 build/
 
+# gradle
 gradlew
-mybatis/gradlew.bat
+gradlew.bat
+gradle/
